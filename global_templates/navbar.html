@@ -1,0 +1,201 @@
+<div class="navbar fixed bg-black shadow-sm top-0 left-0 w-full z-50 py-4 px-6">
+  <div class="navbar-start">
+    <div class="dropdown">
+      <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" /> </svg>
+      </div>
+      <ul
+        tabindex="0"
+        class="menu menu-sm dropdown-content bg-black rounded-box z-1  mt- w-52 p-2 shadow">
+        <li><a href="{% url 'get-all-book' None %}"
+          class=" rainbow-hover btn btn-outline text-[1rem] hover:text-[1.5rem] mx-[10px] my-[10px] hover:btn-primary hover:btn-primary bg-white text-black hover:text-white !dark:bg-white !dark:text-black">📚
+          Browse Books</a></li>
+      {% if user.is_authenticated %}
+      <li><a href="{% url 'borrow_history' %}"
+          class="rainbow-hover btn btn-outline text-[1rem] mx-[10px] my-[10px] hover:btn-primary hover:btn-primary bg-white text-black hover:text-white !dark:bg-white !dark:text-black">📖
+          Borrow History</a></li>
+      <li><a href="{% url 'review_history' %}"
+          class="rainbow-hover btn btn-outline text-[1rem] mx-[10px] my-[10px] hover:btn-primary hover:btn-primary bg-white text-black hover:text-white !dark:bg-white !dark:text-black">
+         📝 My Review</a></li>
+      <li><a href="{% url 'update-profile-fun' %}"
+          class="rainbow-hover btn btn-outline text-[1rem] mx-[10px] my-[10px] font-bold hover:btn-primary hover:btn-primary bg-white text-black hover:text-white !dark:bg-white !dark:text-black">👤
+          Profile</a></li>
+      <li><a href="{% url 'deposit' %}"
+          class="rainbow-hover btn btn-outline text-[1rem] mx-[10px] my-[10px] hover:btn-primary hover:btn-primary bg-white text-black hover:text-white !dark:bg-white !dark:text-black">💳
+          Deposit</a></li>
+      <li><a href="{% url 'transaction_history' %}"
+          class="rainbow-hover btn btn-outline text-[1rem] mx-[10px] my-[10px] hover:btn-primary hover:btn-primary bg-white text-black hover:text-white !dark:bg-white !dark:text-black">📊
+          Transaction History</a></li>
+      {% endif %}
+      </ul>
+    </div>
+    <a class="btn btn-ghost text-[2rem] text-white cedarville-cursive-regular font-bold" href="{% url 'home' %}">BookLoop</a>
+  </div>
+  <div class="navbar-center hidden lg:flex">
+    <!-- <ul class="menu menu-horizontal px-1"> -->
+      <!-- <li><a>Item 1</a></li> -->
+      
+      <!-- <li><a>Item 3</a></li> -->
+    <!-- </ul> -->
+     <ul class="menu menu-horizontal px-1 gap-3 flex justify-center items-center ">
+      <li><a href="{% url 'get-all-book' None %}"
+          class=" rainbow-hover btn btn-outline text-[1rem] hover:btn-primary hover:btn-primary bg-white text-black hover:text-white !dark:bg-white !dark:text-black">📚
+          Browse Books</a></li>
+      {% if user.is_authenticated %}
+      {% if user.user_acc.user_type == "ADMINISTRATOR" %}
+      <li><a href="{% url 'get-all-book' None%}"
+          class="rainbow-hover btn btn-outline text-[1rem] hover:btn-primary hover:btn-primary bg-white text-black hover:text-white !dark:bg-white !dark:text-black">📖
+          Book Section</a></li>
+      
+     <li><a href="{% url 'get_categories'%}"
+          class="rainbow-hover btn btn-outline text-[1rem] hover:btn-primary hover:btn-primary bg-white text-black hover:text-white !dark:bg-white !dark:text-black">📖
+          Category Section</a></li>
+      <li><a href="{% url 'all_review_history'%}"
+          class="rainbow-hover btn btn-outline text-[1rem] hover:btn-primary hover:btn-primary bg-white text-black hover:text-white !dark:bg-white !dark:text-black">📖
+          Review Section</a></li>
+      <div class="dropdown dropdown-end mx-[20px]">
+      <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
+        <button class="btn rainbow-hover text-white">⬇️ More</button>
+      </div>
+      <ul
+        tabindex="-1"
+        class="menu menu-sm dropdown-content bg-white rounded-box z-1 mt-3 w-52 p-2 shadow ">
+        
+        <li><a href="{% url 'borrow_history' %}"
+          class="rainbow-hover btn my-[10px] btn-outline text-[1rem] hover:btn-primary hover:btn-primary bg-white text-black hover:text-white !dark:bg-white !dark:text-black">📖
+          My Borrow History</a></li>
+      <li><a href="{% url 'review_history' %}"
+          class="rainbow-hover btn btn-outline my-[10px] text-[1rem] hover:btn-primary hover:btn-primary bg-white text-black hover:text-white !dark:bg-white !dark:text-black">
+         📝 My Review History</a></li>
+      
+      <li><a href="{% url 'deposit' %}"
+          class="rainbow-hover btn btn-outline text-[1rem] my-[10px] hover:btn-primary hover:btn-primary bg-white text-black hover:text-white !dark:bg-white !dark:text-black">💳
+          Deposit</a></li>
+      <li><a href="{% url 'transaction_history' %}"
+          class="rainbow-hover btn btn-outline text-[1rem] my-[10px] hover:btn-primary hover:btn-primary bg-white text-black hover:text-white !dark:bg-white !dark:text-black">📊
+          My Transaction History</a></li>
+      </ul>
+    </div>  
+   
+         
+      {% else %}
+      <li><a href="{% url 'borrow_history' %}"
+          class="rainbow-hover btn btn-outline text-[1rem] hover:btn-primary hover:btn-primary bg-white text-black hover:text-white !dark:bg-white !dark:text-black">📖
+          Borrow History</a></li>
+      <li><a href="{% url 'review_history' %}"
+          class="rainbow-hover btn btn-outline text-[1rem] hover:btn-primary hover:btn-primary bg-white text-black hover:text-white !dark:bg-white !dark:text-black">
+         📝 My Review</a></li>
+      
+      <li><a href="{% url 'deposit' %}"
+          class="rainbow-hover btn btn-outline text-[1rem] hover:btn-primary hover:btn-primary bg-white text-black hover:text-white !dark:bg-white !dark:text-black">💳
+          Deposit</a></li>
+      <li><a href="{% url 'transaction_history' %}"
+          class="rainbow-hover btn btn-outline text-[1rem] hover:btn-primary hover:btn-primary bg-white text-black hover:text-white !dark:bg-white !dark:text-black">📊
+          Transaction History</a></li>
+      {% endif %}
+      {% endif %}
+    </ul>
+  </div>
+
+
+
+
+  <div class="navbar-end lg:flex">
+    {% if user.is_authenticated %}
+     <div class="dropdown dropdown-end">
+      <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
+        <div class="w-[150px] rounded-[50%]">
+            {% if user.user_acc.user_image %}
+                    <img src="{{ user.user_acc.user_image.url }}" alt="Profile Image"
+                         class="w-[150px] h-[150px] rounded-full object-cover shadow-md">
+                {% else %}
+                    <div class="w-[150px] h-[150] flex items-center justify-center rounded-full bg-gray-200 text-gray-500 text-lg">
+                        No Image
+                    </div>
+                {% endif %}
+        </div>
+      </div>
+      <ul
+        tabindex="-1"
+        class="menu menu-sm dropdown-content bg-white rounded-box z-1 mt-3 w-52 p-2 shadow ">
+        <h1 class="text-center text-black text-[1rem] font-bold mt-[25px]">Hi, {{user.first_name}} {{user.last_name}}</h1>
+        <h1
+          class="text-[1rem] font-bold text-black text-center my-[10px]">
+          💰 Balance: {{ user.user_acc.balance}} BDT</h1>
+        <li><a href="{% url 'update-profile-fun' %}"
+          class="rainbow-hover my-[10px] btn btn-outline text-[1rem] font-bold hover:btn-primary hover:btn-primary bg-white text-black hover:text-white !dark:bg-white !dark:text-black">👤
+          Profile</a></li>
+        <li><a href="{% url 'logout' %}"
+          class="btn rainbow-hover text-[1rem] hover:btn-error hover:rainbow-hover text-black hover:text-white !dark:bg-white !dark:text-black">
+        Logout
+        </a></li>
+      </ul>
+    </div>
+    {% else %}
+    <ul>
+      <li><a href="{% url 'login' %}"
+          class="rainbow-hover btn btn-outline text-[1rem] hover:btn-primary hover:btn-primary bg-white text-black hover:text-white !dark:bg-white !dark:text-black">
+          Login</a></li>
+    </ul>
+    {% endif %}
+  </div>
+</div>
+
+
+
+<style>
+  @keyframes rainbow {
+    0% {
+      background-position: 0% 50%;
+    }
+
+    50% {
+      background-position: 100% 50%;
+    }
+
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  .rainbow-hover {
+    background: linear-gradient(270deg, #ff0080, #ff8c00, #40e0d0, #8a2be2, #ff0080);
+    background-size: 600% 600%;
+    color: white !important;
+    border: none !important;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .rainbow-hover:hover {
+    animation: rainbow 5s ease infinite;
+    color: white !important;
+  }
+
+
+
+  .ui_2 {
+        margin: 0;
+        background: linear-gradient(-247deg,
+            #000000,
+            #0a0a0a,
+            #1a1a2e,
+            #2e2e3e,
+            #3a3a4d,
+            #4b4b60,
+            #5c5c73,
+            #6e6e85,
+            #7f7f98,
+            #8f8fae
+        );
+        background-size: 400% 400%;
+        animation: darkSky 40s ease infinite;
+    }
+
+    @keyframes darkSky {
+        0% { background-position: 0% 50%; }
+        25% { background-position: 50% 100%; }
+        50% { background-position: 100% 50%; }
+        75% { background-position: 50% 0%; }
+        100% { background-position: 0% 50%; }
+    }
+</style>
