@@ -1,0 +1,127 @@
+.
+├── BookLoop
+│   ├── asgi.py
+│   ├── __init__.py
+│   ├── settings.py
+│   ├── urls.py
+│   ├── views.py
+│   └── wsgi.py
+├── books
+│   ├── admin.py
+│   ├── apps.py
+│   ├── __init__.py
+│   ├── models.py
+│   ├── templates
+│   │   ├── add_book_form.html
+│   │   ├── all_books.html
+│   │   ├── book.html
+│   │   └── books.html
+│   ├── test.py
+│   ├── tests.py
+│   ├── urls.py
+│   └── views.py
+├── borrow_records
+│   ├── admin.py
+│   ├── apps.py
+│   ├── __init__.py
+│   ├── models.py
+│   ├── templates
+│   │   └── borrow_record.html
+│   ├── tests.py
+│   ├── urls.py
+│   └── views.py
+├── categories
+│   ├── admin.py
+│   ├── apps.py
+│   ├── __init__.py
+│   ├── models.py
+│   ├── templates
+│   │   └── category.html
+│   ├── tests.py
+│   ├── urls.py
+│   └── views.py
+├── CONSTANT.py
+├── discussions
+│   ├── admin.py
+│   ├── apps.py
+│   ├── __init__.py
+│   ├── models.py
+│   ├── tests.py
+│   ├── urls.py
+│   └── views.py
+├── .env.sample
+├── .gitignore
+├── global_templates
+│   ├── base.html
+│   ├── carousel.html
+│   ├── failed_modal.html
+│   ├── footer.html
+│   ├── index.html
+│   ├── navbar.html
+│   ├── review_carousel.html
+
+
+│   ├── temporary.html
+│   └── transaction_modal.html
+├── manage.py
+├── media
+│   ├── book_image
+│   ├── discussion_image
+│   ├── review_image
+│   └── user_image
+├── Readme.md
+├── requirements.txt
+├── reviews
+│   ├── admin.py
+│   ├── apps.py
+│   ├── __init__.py
+│   ├── models.py
+│   ├── templates
+│   │   └── review_history.html
+│   ├── tests.py
+│   ├── urls.py
+│   └── views.py
+├── static
+│   └── style.css
+├── transactions
+│   ├── admin.py
+│   ├── apps.py
+│   ├── __init__.py
+│   ├── models.py
+│   ├── templates
+│   │   └── transactions_history.html
+│   ├── tests.py
+│   ├── urls.py
+│   └── views.py
+└── users
+    ├── admin.py
+    ├── apps.py
+    ├── forms.py
+    ├── __init__.py
+    ├── models.py
+    ├── templates
+    │   ├── deposit_form.html
+    │   ├── login_form_fun.html
+    │   ├── login_form.html
+    │   ├── payment_cancel.html
+    │   ├── payment_fail.html
+    │   ├── profile.html
+    │   ├── signup_form.html
+    │   ├── update_profile.html
+    │   └── update_profile_t.html
+    ├── tests.py
+    ├── urls.py
+    └── views.py
+
+22 directories, 170 files
+
+
+
+
+
+
+
+
+
+
+
