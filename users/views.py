@@ -32,13 +32,14 @@ def signUp(r):
             password1=data["password1"]
             password2=data["password2"]
             email=data["email"]
-            if username and first_name and last_name and contact_no and email and password1==password2:
-               user1=User.objects.create_user(username=username,first_name=first_name,last_name=last_name,email=email,password=password1)
-               user2=UserModel.objects.create(user=user1,dob=dob,gender=gender,user_image=user_image)
-               if user_image:
-                   user2.user_image=user_image
-                   user2.save()
-               return redirect('login')
+
+            if password1!=password2:
+                messages.error(r,"Password does not match")
+                return render(r,'signup.html')
+            
+            user=User.objects.create(username=username,email=email,password=password1)
+            UserModel.objects.create(user=user,first_name=first_name,last_name=last_name,dob=dob,gender=gender,user_image=user_image)
+
             return render(r,'signup.html')
          else:
             return render(r,'signup.html')      
@@ -69,7 +70,6 @@ def logIn(r):
 def logOut(r):      
     if r.user.is_authenticated: 
       logout(r)
-    #   return HttpResponse("Ok")
       return redirect('home')
     else:
         redirect('login')
@@ -95,7 +95,6 @@ def updateUserProfile(r):
             if user_image:
                userC.user_image=user_image
             userC.save()
-          #   print(user_image)
             return redirect('update-profile-fun')
        else:
           return render(r,'update_profile_t.html')
