@@ -14,10 +14,7 @@
                 </label>
                 <input class="bg-white  appearance-none border rounded w-full py-2 px-3 text-black leading-tight border rounded-md border-gray-500 focus:outline-none focus:shadow-outline" value="" name="balance" id="balance" type="number" required placeholder="Amount">
             </div>
-            {% if form.amount.errors %} 
-            {% for error in form.amount.errors %}
-            <p class="text-red-600 text-sm italic pb-2">{{ error }}</p>
-            {% endfor %} {% endif %}
+            
             <div class="flex w-full justify-center">
                 <button class="rainbow-hover bg-blue-900 text-white hover:text-blue-900 hover:bg-white border border-blue-900 font-bold px-4 py-2 rounded-lg" type="submit">
                 Deposit
