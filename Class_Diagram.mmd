@@ -1,0 +1,123 @@
+---
+config:
+  layout: elk
+  class:
+    hideEmptyMembersBox: true
+---
+classDiagram
+direction TB
+    class User {
+	    +OneToOneField user
+	    +EmailField email
+	    +CharField contact_no
+	    +ManyToManyField borrowed_books
+	    +CharField gender
+	    +DateField deposit_date
+	    +DecimalField balance
+	    +DateField dob
+	    +DateTimeField joining_time
+	    +ImageField user_image
+	    +CharField user_type
+	    +createUser()
+	    +readUser()
+	    +updateUser()
+	    +deleteUser()
+    }
+    class Book {
+	    +CharField title
+	    +TextField description
+	    +CharField author
+	    +DateTimeField add_date
+	    +DecimalField borrow_price
+	    +ImageField book_image
+	    +ForeignKey added_by
+	    +ManyToManyField category
+	    +IntegerField quantity
+	    +IntegerField total_borrowed_time
+	    +createBook()
+	    +readBook()
+	    +updateBook()
+	    +deleteBook()
+    }
+    class Borrow_record {
+	    +ForeignKey user
+	    +ForeignKey book
+	    +DateTimeField borrow_date
+	    +CharField return_status
+	    +DateTimeField due_date
+	    +DateTimeField return_date
+	    +DateTimeField created_at
+	    +BooleanField review_status
+	    +createBorrowRecord()
+	    +readBorrowRecord()
+    }
+    class Category {
+	    +CharField title
+	    +ForeignKey added_by
+	    +DateTimeField add_date
+	    +SlugField slug
+	    +createCategory()
+	    +readCategory()
+	    +updateCategory()
+	    +deleteCategory()
+    }
+    class Discussion {
+	    +ForeignKey user
+	    +ForeignKey book
+	    +TextField comment
+	    +ImageField discussion_image
+	    +DateTimeField created_at
+	    +createDiscussion()
+	    +readDiscussion()
+    }
+    class Review {
+	    +ForeignKey user
+	    +ForeignKey book
+	    +OneToOneField borrow_record
+	    +CharField rating
+	    +TextField comment
+	    +ImageField review_image
+	    +DateTimeField created_at
+	    +createReview()
+	    +readReview()
+    }
+    class Transaction {
+	    +ForeignKey user
+	    +FloatField amount
+	    +CharField transaction_type
+	    +CharField payment_status
+	    +DateTimeField created_at
+	    +CharField reference
+	    +createTransaction()
+	    +readTransaction()
+    }
+
+    User <-- Book
+    User <-- Borrow_record
+    User <-- Discussion
+    User <-- Review
+    User <-- Transaction
+    User <-- Category
+    Book <-- Borrow_record
+    Book <-- Discussion
+    Book <-- Review
+    Book --> Category
+    Borrow_record <-- Review
+
+    
+Borrow_record  <--  Review 
+%% %% ===== Relationships =====
+%% User "1" -- "many" Book : added_by
+%% User "1" -- "many" Borrow_record : user_borrow_record
+%% User "1" -- "many" Discussion : user_discussions
+%% User "1" -- "many" Review : user_reviews
+%% User "1" -- "many" Transaction : user_transaction
+%% User "1" -- "many" Category : added_by
+%% User "many" -- "many" Book : borrowed_books
+
+%% Book "1" -- "many" Borrow_record : book
+%% Book "1" -- "many" Discussion : book_discussions
+%% Book "1" -- "many" Review : book_reviews
+%% Book "many" -- "many" Category : book_categories
+
+%% Borrow_record "1" -- "1" Review : borrow_reviews
