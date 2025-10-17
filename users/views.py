@@ -37,8 +37,11 @@ def signUp(r):
                 messages.error(r,"Password does not match")
                 return render(r,'signup.html')
             
-            user=User.objects.create(username=username,email=email,password=password1)
-            UserModel.objects.create(user=user,first_name=first_name,last_name=last_name,dob=dob,gender=gender,user_image=user_image)
+            user1=User.objects.create_user(username=username,first_name=first_name,last_name=last_name,email=email,password=password1)
+            user2=UserModel.objects.create(user=user1,dob=dob,gender=gender,user_image=user_image)
+            if user_image:
+                user2.user_image=user_image
+                user2.save()
 
             return render(r,'signup.html')
          else:
