@@ -40,7 +40,8 @@ discussions/migrations
 
 !.env.sample
 
-!.gitignore
+
+
 !manage.py
 !media/
 !media/** 
@@ -81,6 +82,6 @@ users/templates/signup_form.html
 users/__pycache__
 users/migrations
 
-!structure.txt
+# !structure.txt
 
 
