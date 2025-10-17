@@ -12,5 +12,3 @@ def homeView(r):
     except Exception:
         return redirect("home")
 
-def redirect_home(request, exception):
-    return redirect('home')
