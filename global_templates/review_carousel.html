@@ -1,0 +1,91 @@
+<style>
+  .fade-group {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+    display: none;
+  }
+
+  .fade-group.active {
+    opacity: 1;
+    transform: translateY(0);
+    display: grid;
+  }
+</style>
+
+<div
+  class="relative w-full my-[25px] max-w-6xl mx-auto bg-white/80 backdrop-blur-md shadow-2xl rounded-3xl p-10 border border-indigo-100">
+  <h2 class="text-3xl font-bold text-center text-indigo-700 mb-8">✨ Reader Reviews ✨</h2>
+
+  {% if reviews %}
+  <!-- Review Carousel -->
+  <div id="carousel" class="relative space-y-4">
+
+    {% for review in reviews %}
+      {% if forloop.counter0|divisibleby:2 %}
+      <div class="fade-group {% if forloop.first %}active{% endif %} grid grid-cols-1 md:grid-cols-2 gap-6">
+      {% endif %}
+
+        <div class="p-6 bg-white rounded-2xl shadow-md hover:shadow-lg border border-indigo-100 text-center space-y-3">
+          {% if review.user.user_acc.user_image.url %}
+          <img src="{{ review.user.user_acc.user_image.url }}"
+            class="w-14 h-14 mx-auto rounded-full border-4 border-indigo-200 shadow-sm">
+          {% else %}
+          <div class="w-14 h-14 mx-auto flex items-center justify-center rounded-full bg-gray-200 text-gray-500 text-sm">
+            No Image
+          </div>
+          {% endif %}
+          <p class="italic text-gray-700">“{{ review.comment }}”</p>
+          <div class="text-yellow-400 text-lg">
+           {{ review.rating }}
+          </div>
+          <p class="font-semibold text-indigo-700">{{ review.user.first_name }} {{ review.user.last_name }}</p>
+          <p class="text-sm text-gray-500">Book: <span class="font-medium">{{ review.book.title }}</span></p>
+          <p class="text-xs text-gray-400 mt-2">Reviewed on {{ review.created_at|date:"M d, Y" }} at {{ review.created_at|time:"H:i" }}</p>
+        </div>
+
+      {% if forloop.counter|divisibleby:2 or forloop.last %}
+      </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  <!-- Dots -->
+  <div class="flex justify-center mt-6 space-x-2">
+    {% for review in reviews %}
+      {% if forloop.counter0|divisibleby:2 %}
+      <div class="dot w-3 h-3 rounded-full bg-gray-300 transition-all duration-500"></div>
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  {% else %}
+  <!-- No Reviews Message -->
+  <div class="text-center py-10">
+    <p class="text-xl text-gray-600 font-medium">😔 No reviews yet. Be the first to share your thoughts!</p>
+  </div>
+  {% endif %}
+</div>
+
+{% if reviews %}
+<script>
+  const groups = document.querySelectorAll('.fade-group');
+  const dots = document.querySelectorAll('.dot');
+  let index = 0;
+
+  function showGroup(n) {
+    groups.forEach((group, i) => {
+      group.classList.remove('active');
+      dots[i].classList.remove('bg-indigo-500');
+      dots[i].classList.add('bg-gray-300');
+    });
+    groups[n].classList.add('active');
+    dots[n].classList.add('bg-indigo-500');
+  }
+
+  setInterval(() => {
+    index = (index + 1) % groups.length;
+    showGroup(index);
+  }, 4000);
+</script>
+{% endif %}
