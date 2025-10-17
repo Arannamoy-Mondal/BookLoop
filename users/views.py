@@ -1,11 +1,7 @@
 from django.shortcuts import render,redirect,HttpResponse
-from .forms import SignUpForm,DepositForm,UserUpdateForm
-from django.views import generic
-from django.urls import reverse_lazy
 from .models import User as UserModel
 from django.contrib.auth.models import User
 from transactions.models import Transaction as TransactionModel
-from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 from dotenv import load_dotenv
 import os
@@ -36,8 +32,13 @@ def signUp(r):
             password1=data["password1"]
             password2=data["password2"]
             email=data["email"]
-            user=User.objects.create(username=username,email=email,password=password1)
-            UserModel.objects.create(user=user,first_name=first_name,last_name=last_name,dob=dob,gender=gender,user_image=user_image)
+            if username and first_name and last_name and contact_no and email and password1==password2:
+               user1=User.objects.create_user(username=username,first_name=first_name,last_name=last_name,email=email,password=password1)
+               user2=UserModel.objects.create(user=user1,dob=dob,gender=gender,user_image=user_image)
+               if user_image:
+                   user2.user_image=user_image
+                   user2.save()
+               return redirect('login')
             return render(r,'signup.html')
          else:
             return render(r,'signup.html')      
@@ -53,6 +54,7 @@ def logIn(r):
              data=r.POST
              username=data['username']
              password=data['password']
+             print(password)
              user=authenticate(request=r,username=username,password=password)
              if user is not None:
                 login(request=r,user=user)
@@ -107,9 +109,9 @@ def depositView(request):
      print(request.user.is_authenticated)
      if request.user.is_authenticated:
           if request.method=="POST":
-               form=DepositForm(request.POST)
-               if form.is_valid():
-                  balance=form.cleaned_data['balance']
+               data=request.POST
+               if data['balance']:
+                  balance=data['balance']
                   user=UserModel.objects.get(user=request.user)
                #    user.balance+=balance
                #    user.save()
@@ -142,8 +144,8 @@ def depositView(request):
                     return redirect(data["GatewayPageURL"])
                   return redirect('home')
                else:
-                    return render(request, "deposit_form.html", {"form": form, "error": "SSL Init Failed"})
-          return render(request,'deposit_form.html',{'form':DepositForm(),'title':'BookLoop | Deposit'})
+                    return render(request, "deposit_form.html")
+          return render(request,'deposit_form.html',{'title':'BookLoop | Deposit'})
      else:
           return redirect('login')
 
