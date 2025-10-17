@@ -207,7 +207,7 @@ tree -a -I 'node_modules|.git|__pycache__|.vscode|migrations|.venv | ss | .env' 
 ### root@1234
 
 
-### Screenshot
+<!-- ### Screenshot
 
 <img src="./ss/Sign-Up.png">
 <img src="./ss/Log-In.png">
@@ -218,4 +218,4 @@ tree -a -I 'node_modules|.git|__pycache__|.vscode|migrations|.venv | ss | .env' 
 <img src="./ss/Transactions_history.png">
 <img src="./ss/Discussion.png">
 <img src="./ss/Borrow_History_Review.png">
-<img src="./ss/Update_Profile.png">
+<img src="./ss/Update_Profile.png"> -->

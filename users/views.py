@@ -13,11 +13,11 @@ import requests
 from django.contrib.auth import login,logout,authenticate
 from django.contrib import messages
 
-load_dotenv()
-Store_ID=os.getenv('Store_ID')
-Store_Password=os.getenv('Store_Password')
-issandbox=os.getenv('issandbox')
-SSLZ_URL=os.getenv('SSLZ_URL')
+# load_dotenv()
+# Store_ID=os.getenv('Store_ID')
+# Store_Password=os.getenv('Store_Password')
+# issandbox=os.getenv('issandbox')
+# SSLZ_URL=os.getenv('SSLZ_URL')
 
 def signUp(r):
    try:
@@ -111,35 +111,35 @@ def depositView(request):
                if form.is_valid():
                   balance=form.cleaned_data['balance']
                   user=UserModel.objects.get(user=request.user)
-               #    user.balance+=balance
-               #    user.save()
-               #    TransactionModel.objects.create(user=request.user,amount=balance,transaction_type="Credit",payment_status="Pending",reference=f"TXN{request.user.id}{TransactionModel.objects.count()}")
+                  user.balance+=balance
+                  user.save()
+                  TransactionModel.objects.create(user=request.user,amount=balance,transaction_type="Credit",payment_status="Pending",reference=f"TXN{request.user.id}{TransactionModel.objects.count()}")
 
-                  payload = {
-                    "store_id": Store_ID,
-                    "store_passwd": Store_Password,
-                    "total_amount": balance,
-                    "currency": "BDT",
-                    "tran_id": f"TXN{request.user.id}{TransactionModel.objects.count()}",
-                    "success_url": request.build_absolute_uri("payment/success/"),
-                    "fail_url": request.build_absolute_uri("payment/fail/"),
-                    "cancel_url": request.build_absolute_uri("payment/cancel/"),
-                    "cus_name": request.user.username,
-                    "cus_email": request.user.email,
-                    "cus_add1": "Dhaka",
-                    "cus_city": "Dhaka",  
-                    "cus_country": "Bangladesh",
-                    "cus_phone": user.contact_no,
-                    "shipping_method": "NO",
-                    "product_name": "Wallet Deposit",
-                    "product_category": "Deposit",
-                    "product_profile": "general",
-                }
-                  response = requests.post(SSLZ_URL, data=payload)
-                  data = response.json()
-                  if data.get("status") == "SUCCESS":
-                    TransactionModel.objects.create(user=request.user,amount=balance,transaction_type="Credit",payment_status="Pending",reference=payload["tran_id"])
-                    return redirect(data["GatewayPageURL"])
+               #    payload = {
+               #      "store_id": Store_ID,
+               #      "store_passwd": Store_Password,
+               #      "total_amount": balance,
+               #      "currency": "BDT",
+               #      "tran_id": f"TXN{request.user.id}{TransactionModel.objects.count()}",
+               #      "success_url": request.build_absolute_uri("payment/success/"),
+               #      "fail_url": request.build_absolute_uri("payment/fail/"),
+               #      "cancel_url": request.build_absolute_uri("payment/cancel/"),
+               #      "cus_name": request.user.username,
+               #      "cus_email": request.user.email,
+               #      "cus_add1": "Dhaka",
+               #      "cus_city": "Dhaka",  
+               #      "cus_country": "Bangladesh",
+               #      "cus_phone": user.contact_no,
+               #      "shipping_method": "NO",
+               #      "product_name": "Wallet Deposit",
+               #      "product_category": "Deposit",
+               #      "product_profile": "general",
+               #  }
+               #    response = requests.post(SSLZ_URL, data=payload)
+               #    data = response.json()
+               #    if data.get("status") == "SUCCESS":
+               #      TransactionModel.objects.create(user=request.user,amount=balance,transaction_type="Credit",payment_status="Pending",reference=payload["tran_id"])
+               #      return redirect(data["GatewayPageURL"])
                   return redirect('home')
                else:
                     return render(request, "deposit_form.html", {"form": form, "error": "SSL Init Failed"})
