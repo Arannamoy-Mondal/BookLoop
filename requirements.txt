@@ -1,0 +1,12 @@
+aamarpay
+asgiref
+certifi
+charset-normalizer
+Django
+idna
+pillow
+python-dotenv
+requests
+sqlparse
+sslcommerz-lib
+urllib3
