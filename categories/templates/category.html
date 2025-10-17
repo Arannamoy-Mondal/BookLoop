@@ -1,0 +1,53 @@
+
+
+<div class="min-h-screen bg-gray-100 py-10 px-4">
+    <div class="max-w-6xl mx-auto bg-white rounded-2xl shadow-lg p-8">
+
+
+        <h2 class="text-3xl font-bold text-gray-800 text-center mb-8">📚 Manage Categories</h2>
+
+        <div role="alert" class="alert alert-error">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none"
+                viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span>{{message}}</span>
+        </div>
+
+
+        <div class="flex justify-center w[100%]">
+
+            <form action="" method="post" class="gap-4 mb-10 mx-auto w-full ">
+
+                <div class="flex flex-col w-full ">
+                    <label for="title" class="text-black bg-white font-medium mb-1">Category Title</label>
+                    <input type="text" name="title" id="title" value="{{category.title}}"
+                        class="text-black bg-white w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-150"
+                        required>
+                </div>
+                <button type="submit"
+                    class="px-6 my-[25px] py-2.5 bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold rounded-lg shadow-md hover:scale-105 hover:shadow-lg transition-all duration-200">
+ 
+                </button>
+            </form>
+
+            <form action="" method="post" class="gap-4 mb-10 mx-auto w-full ">
+
+                <div class="flex flex-col w-full ">
+                    <label for="title" class="text-black bg-white font-medium mb-1">Category Title</label>
+                    <input type="text" name="title" id="title" placeholder="Enter category name..."
+                        class="text-black bg-white w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-150"
+                        required>
+                </div>
+                <button type="submit"
+                    class="px-6 my-[25px] py-2.5 bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold rounded-lg shadow-md hover:scale-105 hover:shadow-lg transition-all duration-200">
+                    ➕ Add Category
+                </button>
+            </form>
+            {% endif %}
+        </div>
+
+    </div>
+</div>
+
