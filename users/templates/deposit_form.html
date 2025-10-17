@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+ {% block title %}
+ {{ title }}
+ {% endblock %} 
+ {% block content %}
+<div class="w-full flex mt-5 justify-center ">
+    <div class="bg-white w-5/12 rounded-lg">      
+        <form method="post" class="px-8 pt-6 pb-8 mb-4">
+            {% csrf_token %}
+            <h1 class="text-center text-black text-[1.25rem] font-bold">Please deposit first.</h1>
+            <div class="mb-4">
+                <label class="block text-black text-sm font-bold mb-2" for="balance">
+                    Amount
+                </label>
+                <input class="bg-white  appearance-none border rounded w-full py-2 px-3 text-black leading-tight border rounded-md border-gray-500 focus:outline-none focus:shadow-outline" value="" name="balance" id="balance" type="number" required placeholder="Amount">
+            </div>
+            {% if form.amount.errors %} 
+            {% for error in form.amount.errors %}
+            <p class="text-red-600 text-sm italic pb-2">{{ error }}</p>
+            {% endfor %} {% endif %}
+            <div class="flex w-full justify-center">
+                <button class="rainbow-hover bg-blue-900 text-white hover:text-blue-900 hover:bg-white border border-blue-900 font-bold px-4 py-2 rounded-lg" type="submit">
+                Deposit
+            </button>
+            </div>
+        </form>
+    </div>
+    
+</div>
+{% endblock %}
+
+
+
+<style>
+  @keyframes rainbow {
+    0% {
+      background-position: 0% 50%;
+    }
+
+    50% {
+      background-position: 100% 50%;
+    }
+
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  .rainbow-hover {
+    background: linear-gradient(270deg, #ff0080, #ff8c00, #40e0d0, #8a2be2, #ff0080);
+    background-size: 600% 600%;
+    color: white !important;
+    border: none !important;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .rainbow-hover:hover {
+    animation: rainbow 5s ease infinite;
+    color: white !important;
+  }
+</style>
