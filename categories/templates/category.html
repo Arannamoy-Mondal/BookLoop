@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% block title %}
+BookLoop | Category
+{% endblock %}
+{% block content %}
+
+<div class="min-h-screen bg-gray-100 py-10 px-4">
+    <div class="max-w-6xl mx-auto bg-white rounded-2xl shadow-lg p-8">
+
+        <!-- Page Title -->
+        <h2 class="text-3xl font-bold text-gray-800 text-center mb-8">📚 Manage Categories</h2>
+        {% if messages %}
+        {% for message in messages %}
+        <div role="alert" class="alert alert-error">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none"
+                viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span>{{message}}</span>
+        </div>
+        {% endfor %}
+        {% endif %}
+        <!-- Add Category Form -->
+        <div class="flex justify-center w[100%]">
+            {% if category %}
+            <form action="" method="post" class="gap-4 mb-10 mx-auto w-full ">
+                {% csrf_token %}
+                <div class="flex flex-col w-full ">
+                    <label for="title" class="text-black bg-white font-medium mb-1">Category Title</label>
+                    <input type="text" name="title" id="title" value="{{category.title}}"
+                        class="text-black bg-white w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-150"
+                        required>
+                </div>
+                <button type="submit"
+                    class="px-6 my-[25px] py-2.5 bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold rounded-lg shadow-md hover:scale-105 hover:shadow-lg transition-all duration-200">
+                    ✏️ Update Category
+                </button>
+            </form>
+            {% else %}
+            <form action="" method="post" class="gap-4 mb-10 mx-auto w-full ">
+                {% csrf_token %}
+                <div class="flex flex-col w-full ">
+                    <label for="title" class="text-black bg-white font-medium mb-1">Category Title</label>
+                    <input type="text" name="title" id="title" placeholder="Enter category name..."
+                        class="text-black bg-white w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-150"
+                        required>
+                </div>
+                <button type="submit"
+                    class="px-6 my-[25px] py-2.5 bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold rounded-lg shadow-md hover:scale-105 hover:shadow-lg transition-all duration-200">
+                    ➕ Add Category
+                </button>
+            </form>
+            {% endif %}
+        </div>
+
+        <!-- Category Table -->
+        {% if categories %}
+        <div class="overflow-x-auto rounded-lg shadow-md">
+            <table class="min-w-full border border-gray-200 text-sm text-gray-700">
+                <thead class="bg-gradient-to-r from-indigo-500 to-blue-500 text-white">
+                    <tr>
+                        <th class="py-3 px-4 text-left font-semibold">ID</th>
+                        <th class="py-3 px-4 text-left font-semibold">Title</th>
+                        <th class="py-3 px-4 text-left font-semibold">Added By</th>
+                        <th class="py-3 px-4 text-left font-semibold">Added Date</th>
+                        <th class="py-3 px-4 text-left font-semibold">Slug</th>
+                        <th class="py-3 px-4 text-center font-semibold">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                    {% for category in categories %}
+                    <tr class="hover:bg-gray-50 transition">
+                        <td class="py-3 px-4">{{ category.id }}</td>
+                        <td class="py-3 px-4 font-medium text-gray-800">{{ category.title }}</td>
+                        <td class="py-3 px-4">{{ category.added_by }}</td>
+                        <td class="py-3 px-4">{{ category.add_date|date:"Y-m-d H:i" }}</td>
+                        <td class="py-3 px-4 text-gray-500">{{ category.slug }}</td>
+
+
+                        <td class="py-3 px-4 text-center">
+                            <div class="flex items-center justify-center gap-3">
+
+                                <a href="{% url 'update_category' category.id %}"
+                                    class="px-3 py-1.5 text-sm font-semibold text-white bg-gradient-to-r from-emerald-500 to-green-600 rounded-lg shadow hover:scale-105 hover:shadow-lg transition duration-200 ease-in-out">
+                                    ✏️ Edit
+                                </a>
+
+                                
+                                    <a href="{% url 'delete_category' category.id%}"
+                                        class="px-3 py-1.5 text-sm font-semibold text-white bg-gradient-to-r from-red-500 to-pink-600 rounded-lg shadow hover:scale-105 hover:shadow-lg transition duration-200 ease-in-out">
+                                        🗑️ Delete
+                            </a>
+                             
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="text-center mt-10">
+            <h3 class="text-xl font-semibold text-gray-600">🚫 No Category Found</h3>
+            <p class="text-gray-500 mt-1">Start by adding your first category above.</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}
