@@ -47,7 +47,7 @@ def reviewHistory(r):
     
     
 def allReviewHistory(r):
-    if r.user.is_authenticated and r.user.user_acc.user_type=="ADMINISTRATOR":
+    if r.user.is_authenticated and (r.user.user_acc.user_type=="ADMINISTRATOR" or r.user.user_acc.user_type=="SUPER_USER"):
        reviews=Review.objects.all()
        return render(r,"review_history.html",{"reviews":reviews})
     else:
