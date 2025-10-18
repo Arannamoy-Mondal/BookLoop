@@ -38,11 +38,16 @@
       <!-- <li><a>Item 3</a></li> -->
     <!-- </ul> -->
      <ul class="menu menu-horizontal px-1 gap-3 flex justify-center items-center ">
+      {% if user.is_not_authenticated %}
       <li><a href="{% url 'get-all-book' None %}"
           class=" rainbow-hover btn btn-outline text-[1rem] hover:btn-primary hover:btn-primary bg-white text-black hover:text-white !dark:bg-white !dark:text-black">📚
           Browse Books</a></li>
+      {% endif %}
       {% if user.is_authenticated %}
-      {% if user.user_acc.user_type == "ADMINISTRATOR" %}
+      {% if user.user_acc.user_type == "ADMINISTRATOR" or user.user_acc.user_type == "SUPER_USER" %}
+      <li><a href="{% url 'all-user-history' %}"
+          class="rainbow-hover btn btn-outline text-[1rem] hover:btn-primary hover:btn-primary bg-white text-black hover:text-white !dark:bg-white !dark:text-black">
+         👤 User Section</a></li>
       <li><a href="{% url 'get-all-book' None%}"
           class="rainbow-hover btn btn-outline text-[1rem] hover:btn-primary hover:btn-primary bg-white text-black hover:text-white !dark:bg-white !dark:text-black">📖
           Book Section</a></li>
@@ -59,7 +64,7 @@
       </div>
       <ul
         tabindex="-1"
-        class="menu menu-sm dropdown-content bg-white rounded-box z-1 mt-3 w-52 p-2 shadow ">
+        class="menu menu-sm dropdown-content bg-black rounded-box z-1 mt-3 w-52 p-2 shadow ">
         
         <li><a href="{% url 'borrow_history' %}"
           class="rainbow-hover btn my-[10px] btn-outline text-[1rem] hover:btn-primary hover:btn-primary bg-white text-black hover:text-white !dark:bg-white !dark:text-black">📖
@@ -79,6 +84,9 @@
    
          
       {% else %}
+      <li><a href="{% url 'get-all-book' None %}"
+          class=" rainbow-hover btn btn-outline text-[1rem] hover:btn-primary hover:btn-primary bg-white text-black hover:text-white !dark:bg-white !dark:text-black">📚
+          Browse Books</a></li>
       <li><a href="{% url 'borrow_history' %}"
           class="rainbow-hover btn btn-outline text-[1rem] hover:btn-primary hover:btn-primary bg-white text-black hover:text-white !dark:bg-white !dark:text-black">📖
           Borrow History</a></li>
