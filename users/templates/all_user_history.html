@@ -112,7 +112,7 @@
 
                         <td class="px-6 py-4 whitespace-nowrap">
                             {% if u.user_acc.user_type == "ADMINISTRATOR" and user.user_acc.user_type == "SUPER_USER" %}
-                            <a  class="btn btn-error">Demote to General User</a>
+                            <a href="{% url 'demotion' u.user_acc.id %}" class="btn btn-error">Demote to General User</a>
                             {% elif u.user_acc.user_type == "USER" and user.user_acc.user_type == "SUPER_USER"%}
                             <a href="{% url 'promotion' u.user_acc.id %}" class="btn btn-primary">Promote as administrator</a>
                             {% else %}
@@ -124,88 +124,36 @@
                 </tbody>
             </table>
         </div>
-
-        <!-- Mobile Card View -->
         <div class="lg:hidden divide-y divide-gray-200">
-            {% for r in b %}
-            <div class="p-4 sm:p-6 hover:bg-gray-50 transition-colors duration-200">
-                <!-- Book Info -->
-                <div class="flex items-start space-x-4 mb-4">
-                    <div class="w-16 h-20 sm:w-20 sm:h-24 flex-shrink-0 rounded-lg overflow-hidden">
-                        <img src="{{ r.book.book_image.url }}" alt="{{ r.book.title }}"
-                            class="w-full h-full object-cover">
+            {% for u in users %}
+            <div class="p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-4 sm:space-y-0">
+                <div class="flex items-center space-x-4">
+                    <img src="{{ u.user_acc.user_image.url }}" alt="{{ u.username }}" class="w-16 h-16 rounded-lg object-cover">
+                    <div>
+                        <h4 class="text-base font-semibold text-black">{{ u.username }}</h4>
+                        <p class="text-sm text-gray-600">{{ u.first_name }} {{ u.last_name }}</p>
+                        <p class="text-xs text-gray-500 mt-1">{{ u.email }}</p>
                     </div>
-                    <div class="flex-1 min-w-0">
-                        <div class="text-sm font-medium text-black mb-1">{{ r.book.title }}</div>
-                        <div class="text-sm text-gray-500 mb-2">{{ r.book.author }}</div>
-                        <div class="text-xs text-gray-400">ID: {{user.id}}</div>
-                    </div>
-                    <!-- Status Badge -->
-                    <div class="flex-shrink-0">
-                        {% if r.return_status != "Not" %}
-                        <span
-                            class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                            <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
-                            Returned
-                        </span>
+                </div>
+                <div class="text-sm text-gray-700 space-y-1">
+                    <p><span class="font-medium">Joined:</span> {{ u.user_acc.joining_time|date:"M d, Y" }}</p>
+                    <p><span class="font-medium">DOB:</span> {{ u.user_acc.dob|date:"M d, Y" }}</p>
+                    <div class="mt-2">
+                        {% if u.user_acc.user_type == "ADMINISTRATOR" and user.user_acc.user_type == "SUPER_USER" %}
+                        <a href="{% url 'demotion' u.user_acc.id %}" class="text-xs bg-red-500 text-white px-3 py-1 rounded-lg">Demote</a>
+                        {% elif u.user_acc.user_type == "USER" and user.user_acc.user_type == "SUPER_USER" %}
+                        <a href="{% url 'promotion' u.user_acc.id %}" class="text-xs bg-blue-500 text-white px-3 py-1 rounded-lg">Promote</a>
                         {% else %}
-                        <span
-                            class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-                            <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
-                            Not Returned
-                        </span>
+                        <span class="text-xs bg-green-100 text-green-700 px-3 py-1 rounded-lg">{{ u.user_acc.user_type }}</span>
                         {% endif %}
                     </div>
-                </div>
-
-                <!-- Dates -->
-                <div class="grid grid-cols-2 gap-4 mb-4">
-                    <div>
-                        <p class="text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Borrowed</p>
-                        <p class="text-sm text-black">{{ r.borrow_date|date:"M d, Y" }}</p>
-                        <p class="text-xs text-gray-500">{{ r.borrow_date|time:"g:i A" }}</p>
-                    </div>
-                    <div>
-                        <p class="text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Return Date</p>
-                        <p class="text-sm text-black">{{ r.return_date|date:"M d, Y" }}</p>
-                        <p class="text-xs text-gray-500">{{ r.return_date|time:"g:i A" }}</p>
-                    </div>
-                </div>
-
-                <!-- Action -->
-                <div class="flex justify-end">
-                    {% if r.return_status != "Not" %}
-                    <span
-                        class="inline-flex items-center px-3 py-1 rounded-lg text-sm font-medium bg-green-100 text-green-800">
-                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7">
-                            </path>
-                        </svg>
-                        Completed
-                    </span>
-                    {% else %}
-                    <a href="{% url 'return_book' r.book.id r.id %}"
-                        class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg text-white bg-red-600 hover:bg-red-700 transition-colors duration-200">
-                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"></path>
-                        </svg>
-                        Return Now
-                    </a>
-                    {% endif %}
                 </div>
             </div>
             {% endfor %}
         </div>
-    </div>
+     </div>
     {% else %}
-    <!-- Empty State -->
+
     <div class="text-center py-12 sm:py-16">
         <div class="mx-auto w-20 h-20 sm:w-24 sm:h-24 bg-gray-100 rounded-full flex items-center justify-center mb-6">
             👤
