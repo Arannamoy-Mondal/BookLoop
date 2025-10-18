@@ -1,4 +1,3 @@
-aamarpay
 asgiref
 certifi
 charset-normalizer
