@@ -68,7 +68,7 @@ reviews/migrations
 !transactions/** 
 transactions/__pycache__
 transactions/migrations
-transactions/templates
+
 
 
 
