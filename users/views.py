@@ -15,7 +15,7 @@ Store_Password=os.getenv('Store_Password')
 issandbox=os.getenv('issandbox')
 SSLZ_URL=os.getenv('SSLZ_URL')
 
-def signUp(r):
+def signUpUser(r):
    try:
       if r.user.is_authenticated:
         return redirect('home')
@@ -35,14 +35,13 @@ def signUp(r):
 
             if password1!=password2:
                 messages.error(r,"Password does not match")
-                print(username,first_name,last_name,email,password1,password2,dob,gender,user_image)
                 return render(r,'signup.html')
             elif username and first_name and last_name and email and password1==password2 and dob and contact_no and gender and user_image:
-               print(username,first_name,last_name,email,password1,password2,dob,gender,user_image)
+
                user1=User.objects.create_user(username=username,first_name=first_name,last_name=last_name,email=email,password=password1)
                user2=UserModel.objects.create(user=user1,dob=dob,gender=gender,user_image=user_image,contact_no=contact_no)
                user=authenticate(r,username=username,password=password1)
-               print(user)
+
                if user is not None:
                    login(r,user)
                    redirect('home')
@@ -53,7 +52,48 @@ def signUp(r):
    except Exception as e:
          messages.error(r,e)
          return render(r,'signup.html')
-      
+
+
+def signUpSuperUser(r):
+    try:
+      if r.user.is_authenticated:
+        return redirect('home')
+      else:
+         if r.method=="POST":
+            data=r.POST
+            username=data["username"]
+            first_name=data["first_name"]
+            last_name=data["last_name"]
+            contact_no=data["contact_no"]
+            dob=data["dob"]
+            gender=data["gender"]
+            user_image=r.FILES.get('user_image')
+            password1=data["password1"]
+            password2=data["password2"]
+            email=data["email"]
+
+            if password1!=password2:
+                messages.error(r,"Password does not match")
+                return render(r,'signup.html')
+            elif username and first_name and last_name and email and password1==password2 and dob and contact_no and gender and user_image:
+               user1=User.objects.create_superuser(username=username,first_name=first_name,last_name=last_name,email=email,password=password1)
+               user1.is_staff=True
+               user1.is_superuser=True
+               user2=UserModel.objects.create(user=user1,dob=dob,gender=gender,user_image=user_image,contact_no=contact_no)
+               user2.user_type="SUPER_USER"
+               user2.save()
+               user=authenticate(r,username=username,password=password1)
+               if user is not None:
+                   login(r,user)
+                   redirect('home')
+
+            return redirect('home')
+         else:
+            return render(r,'signup.html')      
+    except Exception as e:
+            messages.error(r,e)
+            return render(r,'signup.html')
+    
 def logIn(r):
     if r.user.is_authenticated:
         return redirect("home")
@@ -189,6 +229,25 @@ def payment_cancel(request):
     transaction.save()
     return redirect('transaction_history')
 
+
+
+def allUserHistory(r):
+    if r.user.is_authenticated and (r.user.user_acc.user_type=="ADMINISTRATOR" or r.user.user_acc.user_type == "SUPER_USER"):
+       users=User.objects.all()
+       return render(r,"all_user_history.html",{"users":users})
+    else:
+        return redirect("login")
+    
+def promoteAsAdministrator(r,id):
+    if r.user.is_authenticated and r.user.user_acc.user_type == "SUPER_USER":
+       user=UserModel.objects.get(pk=id)
+       if user.user_type=="USER":
+         user.user_type="ADMINISTRATOR"
+         user.save()
+         return redirect("all-user-history")
+       return redirect("all-user-history")
+    else:
+        return redirect("login")
 
 
 

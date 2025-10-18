@@ -1,5 +1,5 @@
 GENDER=(("Male","Male"),("Female","Female"))
-USER_TYPE=(("ADMINISTRATOR","ADMINISTRATOR"),("USER","USER"))
+USER_TYPE=(("ADMINISTRATOR","ADMINISTRATOR"),("USER","USER"),("SUPER_USER","SUPER_USER"))
 TRANSACTION_TYPE=(("Debit","Debit"),("Credit","Credit"),("Penalty","Penalty"))
 PAYMENT_STATUS=(("Pending","Pending"),("Success","Success"),("Cancelled","Cancelled"),("Failed","Failed"))
 RATING=(("⭐⭐⭐⭐⭐","⭐⭐⭐⭐⭐"),("⭐⭐⭐⭐","⭐⭐⭐⭐"),("⭐⭐⭐","⭐⭐⭐"),("⭐⭐","⭐⭐"),("⭐","⭐"))

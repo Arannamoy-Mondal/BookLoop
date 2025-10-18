@@ -3,7 +3,7 @@ from .models import Category
 from django.contrib import messages
 
 def getCategories(r):
-    if r.user.is_authenticated and r.user.user_acc.user_type=="ADMINISTRATOR":
+    if r.user.is_authenticated and (r.user.user_acc.user_type=="ADMINISTRATOR" or r.user.user_acc.user_type == "SUPER_USER"):
        categories=Category.objects.all()
        if r.method=="POST":
           data=r.POST
@@ -18,7 +18,7 @@ def getCategories(r):
 
 
 def updateCategory(r,id):
-    if r.user.is_authenticated and r.user.user_acc.user_type=="ADMINISTRATOR":
+    if r.user.is_authenticated and (r.user.user_acc.user_type=="ADMINISTRATOR" or r.user.user_acc.user_type == "SUPER_USER"):
        categories=Category.objects.all()
        category=Category.objects.get(pk=id)
        
@@ -38,7 +38,7 @@ def updateCategory(r,id):
         return redirect('login')
 
 def deleteCategory(r,id):
-    if r.user.is_authenticated and r.user.user_acc.user_type=="ADMINISTRATOR":
+    if r.user.is_authenticated and (r.user.user_acc.user_type=="ADMINISTRATOR" or r.user.user_acc.user_type == "SUPER_USER"):
         category=Category.objects.get(pk=id)
         category.delete()
         return redirect('get_categories')
