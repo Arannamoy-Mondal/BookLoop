@@ -76,7 +76,6 @@ transactions/templates
 !users/**  
 users/templates/login_form.html
 users/templates/update_profile.html
-users/templates/update_profile_t.html
 users/templates/profile.html
 users/templates/signup_form.html
 users/__pycache__
