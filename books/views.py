@@ -11,7 +11,7 @@ import datetime
 
 
 def bookSection(r):
-    if r.user.is_authenticated and r.user.user_acc.user_type == "ADMINISTRATOR":
+    if r.user.is_authenticated and (r.user.user_acc.user_type=="ADMINISTRATOR" or r.user.user_acc.user_type == "SUPER_USER"):
         books=BookModel.objects.all()
         return render(r,'books.html',{'books':books})
     else:
@@ -19,7 +19,7 @@ def bookSection(r):
 
 
 def updateBook(r,id):
-    if r.user.is_authenticated and r.user.user_acc.user_type == "ADMINISTRATOR":
+    if r.user.is_authenticated and (r.user.user_acc.user_type=="ADMINISTRATOR" or r.user.user_acc.user_type == "SUPER_USER"):
         book=BookModel.objects.get(pk=id)
         if r.method=="POST":
              data=r.POST
@@ -44,7 +44,7 @@ def updateBook(r,id):
     
 
 def deleteBook(r,id):
-    if r.user.is_authenticated and r.user.user_acc.user_type == "ADMINISTRATOR":
+    if r.user.is_authenticated and (r.user.user_acc.user_type=="ADMINISTRATOR" or r.user.user_acc.user_type == "SUPER_USER"):
         book=BookModel.objects.get(pk=id)
         book.delete()
         return redirect('get-all-book','None')
@@ -52,7 +52,7 @@ def deleteBook(r,id):
          return redirect('login')
 
 def addBook(r):
-    if r.user.is_authenticated and r.user.user_acc.user_type == "ADMINISTRATOR":
+    if r.user.is_authenticated and (r.user.user_acc.user_type == "ADMINISTRATOR" or r.user.user_acc.user_type == "SUPER_USER"):
         categories = CategoryModel.objects.all()
         if r.method == "POST":
             data = r.POST
