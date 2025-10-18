@@ -159,9 +159,9 @@ def depositView(request):
                if data['balance']:
                   balance=data['balance']
                   user=UserModel.objects.get(user=request.user)
-               #    user.balance+=balance
-               #    user.save()
-               #    TransactionModel.objects.create(user=request.user,amount=balance,transaction_type="Credit",payment_status="Pending",reference=f"TXN{request.user.id}{TransactionModel.objects.count()}")
+                  # user.balance+=int(balance)
+                  # user.save()
+                  # TransactionModel.objects.create(user=request.user,amount=balance,transaction_type="Credit",payment_status="Pending",reference=f"TXN{request.user.id}{TransactionModel.objects.count()}")
 
                   payload = {
                     "store_id": Store_ID,
