@@ -18,7 +18,7 @@ SSLZ_URL=os.getenv('SSLZ_URL')
 def signUp(r):
    try:
       if r.user.is_authenticated:
-        return redirect('login')
+        return redirect('home')
       else:
          if r.method=="POST":
             data=r.POST
@@ -35,15 +35,19 @@ def signUp(r):
 
             if password1!=password2:
                 messages.error(r,"Password does not match")
+                print(username,first_name,last_name,email,password1,password2,dob,gender,user_image)
                 return render(r,'signup.html')
-            
-            user1=User.objects.create_user(username=username,first_name=first_name,last_name=last_name,email=email,password=password1)
-            user2=UserModel.objects.create(user=user1,dob=dob,gender=gender,user_image=user_image)
-            if user_image:
-                user2.user_image=user_image
-                user2.save()
+            elif username and first_name and last_name and email and password1==password2 and dob and contact_no and gender and user_image:
+               print(username,first_name,last_name,email,password1,password2,dob,gender,user_image)
+               user1=User.objects.create_user(username=username,first_name=first_name,last_name=last_name,email=email,password=password1)
+               user2=UserModel.objects.create(user=user1,dob=dob,gender=gender,user_image=user_image,contact_no=contact_no)
+               user=authenticate(r,username=username,password=password1)
+               print(user)
+               if user is not None:
+                   login(r,user)
+                   redirect('home')
 
-            return render(r,'signup.html')
+            return redirect('home')
          else:
             return render(r,'signup.html')      
    except Exception as e:

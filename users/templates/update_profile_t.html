@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="w-[90%] mx-auto py-10 flex flex-col lg:flex-row gap-10">
+
+    <!-- Profile Info Card -->
+    <div class="lg:w-1/2 w-full">
+        <div class="card bg-white shadow-xl p-6">
+            <div class="flex flex-col items-center gap-4">
+                {% if user.user_acc.user_image %}
+                    <img src="{{ user.user_acc.user_image.url }}" alt="Profile Image"
+                         class="w-32 h-32 rounded-full object-cover border-4 border-primary shadow-md">
+                {% else %}
+                    <div class="w-32 h-32 flex items-center justify-center rounded-full bg-gray-200 text-gray-500 text-lg">
+                        No Image
+                    </div>
+                {% endif %}
+                <div class="text-center space-y-2">
+                    <h2 class="text-2xl font-bold text-primary">{{ user.first_name }} {{ user.last_name }}</h2>
+                     <p class="text-black">✉️ {{ user.email }}</p>
+                     <p class="text-black">👤 {{ user.user_acc.user_type }}</p>
+                    <p class="text-black">📞 {{ user.user_acc.contact_no }}</p>
+                    <p class="text-black">⚧ {{ user.user_acc.gender }}</p>
+                    <p class="text-black">🎂 {{ user.user_acc.dob }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Update Profile Form -->
+    <div class="lg:w-1/2 w-full">
+        <div class="card bg-white shadow-xl p-6">
+            <h2 class="text-xl font-bold mb-4 text-primary text-black">Update Profile</h2>
+            <form action="{% url 'update-profile-fun' %}" method="post" enctype="multipart/form-data" class="space-y-4">
+                {% csrf_token %}
+                <div>
+                    <label class="label font-semibold text-black">First Name</label>
+                    <input type="text" name="first_name" placeholder="First Name"
+                           class="input input-bordered w-full bg-white text-black" value="{{ user.first_name }}">
+                </div>
+                <div>
+                    <label class="label font-semibold text-black">Last Name</label>
+                    <input type="text" name="last_name" placeholder="Last Name"
+                           class="input input-bordered w-full bg-white text-black" value="{{ user.last_name }}">
+                </div>
+                <div>
+                    <label class="label font-semibold text-black">Contact No</label>
+                    <input type="text" name="contact_no" placeholder="Contact No"
+                           class="input input-bordered w-full bg-white text-black" value="{{ user.user_acc.contact_no }}">
+                </div>
+                <div> 
+                    <label class="label font-semibold text-black">Profile Image</label>
+                    <input type="file" name="user_image" class="file-input bg-white file-input-bordered w-full text-black file:text-white file:bg-indigo-600 file:border-0 file:rounded-md file:px-4 file:py-2 file:cursor-pointer">
+                </div>
+                <div class="pt-2">
+                    <input type="submit" class="btn btn-primary w-full" value="Update Profile">
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
