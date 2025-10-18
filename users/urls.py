@@ -1,6 +1,5 @@
 from django.urls import path,include
-from .views import logIn,logOut,signUpUser,depositView,updateUserProfile,payment_success,payment_fail,payment_cancel,signUpSuperUser,allUserHistory,promoteAsAdministrator
-
+from .views import logIn,logOut,signUpUser,depositView,updateUserProfile,payment_success,payment_fail,payment_cancel,signUpSuperUser,allUserHistory,promoteAsAdministrator,demoteAsGUser
 urlpatterns=[
     path('signup/',signUpUser,name='signup'),
     path("login/",logIn,name="login"),
@@ -12,5 +11,6 @@ urlpatterns=[
     path("deposit/payment/cancel/", payment_cancel, name="payment_cancel"),
     path("superuser/signup/",signUpSuperUser,name="create-super-user"),
     path("all-user-history/",allUserHistory,name="all-user-history"),
-    path("promoteAsAdministrator/<int:id>",promoteAsAdministrator,name="promotion")
+    path("promoteAsAdministrator/<int:id>",promoteAsAdministrator,name="promotion"),
+    path("demoteAsGUser/<int:id>",demoteAsGUser,name="demotion")
 ]

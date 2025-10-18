@@ -40,8 +40,9 @@ def signUpUser(r):
 
                user1=User.objects.create_user(username=username,first_name=first_name,last_name=last_name,email=email,password=password1)
                user2=UserModel.objects.create(user=user1,dob=dob,gender=gender,user_image=user_image,contact_no=contact_no)
+               if user2 is None:
+                  user1.delete()
                user=authenticate(r,username=username,password=password1)
-
                if user is not None:
                    login(r,user)
                    redirect('home')
@@ -243,6 +244,18 @@ def promoteAsAdministrator(r,id):
        user=UserModel.objects.get(pk=id)
        if user.user_type=="USER":
          user.user_type="ADMINISTRATOR"
+         user.save()
+         return redirect("all-user-history")
+       return redirect("all-user-history")
+    else:
+        return redirect("login")
+    
+
+def demoteAsGUser(r,id):
+    if r.user.is_authenticated and r.user.user_acc.user_type == "SUPER_USER":
+       user=UserModel.objects.get(pk=id)
+       if user.user_type=="ADMINISTRATOR":
+         user.user_type="USER"
          user.save()
          return redirect("all-user-history")
        return redirect("all-user-history")
