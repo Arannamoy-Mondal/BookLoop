@@ -48,7 +48,7 @@ def updateBook(r,id):
                  print("New categories",new_categories)    
              book.save()
              return redirect('specific_book',book.id)
-        return render(r,'add_book_form.html',{'book':book})
+        return render(r,'add_book_form.html',{'book':book,'categories':not_selected_category})
     else:
          return redirect('login')
     
