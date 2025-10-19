@@ -51,7 +51,7 @@ BookLoop | Review
       </div>
 
       {% if review.user == user %}
-      <a class="btn btn-warning text-black">Edit</a>
+      <!-- <a class="btn btn-warning text-black">Edit</a> -->
       <a href="{% url 'delete-review' review.id %}" class="btn btn-error text-black">Delete</a>
       {% endif %}
 
