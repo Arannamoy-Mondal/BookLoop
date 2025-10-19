@@ -17,10 +17,9 @@ BookLoop | Review
     <div class="border rounded-xl p-4 bg-gray-50 hover:bg-gray-100 transition">
       <div class="flex items-center justify-between mb-2">
         <div class="flex items-center space-x-3">
-          <!-- <img src="{{review.user.user_image.url}}" alt="User" class="w-10 h-10 rounded-full border" /> -->
+          <img src="{{review.user.user_acc.user_image.url}}" alt="User" class="w-10 h-10 rounded-full border" />
           <div>
             <p class="font-semibold text-gray-800">{{review.user.first_name}} {{review.user.last_name}}</p>
-            <p class="text-xs text-black">Yesterday</p>
           </div>
         </div>
         <div class="flex text-yellow-400 text-lg">
@@ -51,9 +50,10 @@ BookLoop | Review
         <p class="text-xs text-black">Reviewed on {{review.created_at}}</p>
       </div>
 
-<!-- aeysha start -->
-      <button class="btn btn-error">Edit</button>
-<!-- aeysha end-->
+      {% if review.user == user %}
+      <a class="btn btn-warning text-black">Edit</a>
+      <a href="{% url 'delete-review' review.id %}" class="btn btn-error text-black">Delete</a>
+      {% endif %}
 
     </div>
     {% endfor %}
