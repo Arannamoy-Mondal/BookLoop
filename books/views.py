@@ -41,9 +41,10 @@ def updateBook(r,id):
                  book.borrow_price=data['borrow_price']
              if data['quantity']:
                  book.quantity=data['quantity']
-                 if data['category']:
-                 new_categories=data['category']
-                 print(new_categories)
+             if r.POST.getlist('category'):
+                 new_categories=CategoryModel.objects.filter(title__in=r.POST.getlist('category'))
+                 print(r.POST.getlist('category'))
+                 print("New categories",new_categories)    
              book.save()
              return redirect('specific_book',book.id)
         return render(r,'add_book_form.html',{'book':book})
