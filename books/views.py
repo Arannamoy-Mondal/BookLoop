@@ -21,6 +21,10 @@ def bookSection(r):
 def updateBook(r,id):
     if r.user.is_authenticated and (r.user.user_acc.user_type=="ADMINISTRATOR" or r.user.user_acc.user_type == "SUPER_USER"):
         book=BookModel.objects.get(pk=id)
+        categories=CategoryModel.objects.all()
+        print(categories)
+        not_selected_category=set(categories)-set(book.category.all())
+        print(not_selected_category)
         if r.method=="POST":
              data=r.POST
              book_image=r.FILES.get('book_image')
@@ -34,11 +38,17 @@ def updateBook(r,id):
                  book.book_image=book_image
              if data['borrow_price']:
                  book.borrow_price=data['borrow_price']
+                 
+             if r.POST.getlist('category'):
+                 new_categories=CategoryModel.objects.filter(title__in=r.POST.getlist('category'))
+                 book.category.set(new_categories)
+                 print(r.POST.getlist('category'))
+                 print("New categories",new_categories)
              if data['quantity']:
                  book.quantity=data['quantity']
              book.save()
              return redirect('specific_book',book.id)
-        return render(r,'add_book_form.html',{'book':book})
+        return render(r,'add_book_form.html',{'book':book,'categories':not_selected_category})
     else:
          return redirect('login')
     
