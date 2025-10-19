@@ -21,6 +21,8 @@ def bookSection(r):
 def updateBook(r,id):
     if r.user.is_authenticated and (r.user.user_acc.user_type=="ADMINISTRATOR" or r.user.user_acc.user_type == "SUPER_USER"):
         book=BookModel.objects.get(pk=id)
+        categories=CategoryModel.objects.all()
+        print(categories)
         if r.method=="POST":
              data=r.POST
              book_image=r.FILES.get('book_image')
