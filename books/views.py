@@ -39,6 +39,12 @@ def updateBook(r,id):
                  book.book_image=book_image
              if data['borrow_price']:
                  book.borrow_price=data['borrow_price']
+                 
+             if r.POST.getlist('category'):
+                 new_categories=CategoryModel.objects.filter(title__in=r.POST.getlist('category'))
+                 book.category.set(new_categories)
+                 print(r.POST.getlist('category'))
+                 print("New categories",new_categories)
              if data['quantity']:
                  book.quantity=data['quantity']
              if r.POST.getlist('category'):
