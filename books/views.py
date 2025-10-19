@@ -43,6 +43,7 @@ def updateBook(r,id):
                  book.quantity=data['quantity']
              if r.POST.getlist('category'):
                  new_categories=CategoryModel.objects.filter(title__in=r.POST.getlist('category'))
+                 book.category.set(new_categories)
                  print(r.POST.getlist('category'))
                  print("New categories",new_categories)    
              book.save()
