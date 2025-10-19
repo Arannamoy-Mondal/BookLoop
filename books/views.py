@@ -22,7 +22,8 @@ def updateBook(r,id):
     if r.user.is_authenticated and (r.user.user_acc.user_type=="ADMINISTRATOR" or r.user.user_acc.user_type == "SUPER_USER"):
         book=BookModel.objects.get(pk=id)
         categories=CategoryModel.objects.all()
-        # print(categories)
+        print(categories)
+        not_selected_category=set(categories)-set(book.category)
         not_selected_category=set(categories).union(set(book.category.all()))
         print(not_selected_category)
         
