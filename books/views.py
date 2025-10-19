@@ -22,9 +22,9 @@ def updateBook(r,id):
     if r.user.is_authenticated and (r.user.user_acc.user_type=="ADMINISTRATOR" or r.user.user_acc.user_type == "SUPER_USER"):
         book=BookModel.objects.get(pk=id)
         categories=CategoryModel.objects.all()
-        print(categories)
+        #print(categories)
         not_selected_category=set(categories)-set(book.category.all())
-        print(not_selected_category)
+        #print(not_selected_category)
         
         if r.method=="POST":
              data=r.POST
@@ -41,6 +41,9 @@ def updateBook(r,id):
                  book.borrow_price=data['borrow_price']
              if data['quantity']:
                  book.quantity=data['quantity']
+                 if data['category']:
+                 new_categories=data['category']
+                 print(new_categories)
              book.save()
              return redirect('specific_book',book.id)
         return render(r,'add_book_form.html',{'book':book})
