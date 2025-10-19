@@ -1,85 +1,89 @@
-*
+# *
 
-!BookLoop/
-!BookLoop/**
-BookLoop/__pycache__
-BookLoop/migrations
-
-
-!books/
-!books/** 
-books/__pycache__
-books/migrations
+# !BookLoop/
+# !BookLoop/**
+# BookLoop/__pycache__
+# BookLoop/migrations/__pycache__
 
 
-!borrow_records/
-!borrow_records/** 
-borrow_records/__pycache__
-borrow_records/migrations
+# !books/
+# !books/** 
+# books/__pycache__
+# books/migrations/__pycache__
 
-
-!CONSTANT.py
-
-!categories/
-!categories/** 
-categories/__pycache__
-categories/migrations
-
-
-!Class_Diagram.mmd
-!Class_Diagram.png
-
-!db.sqlite3
-
-!discussions/
-!discussions/** 
-discussions/__pycache__
-discussions/migrations
+# !borrow_records/
+# !borrow_records/** 
+# borrow_records/__pycache__
 
 
 
-!.env.sample
+# !CONSTANT.py
+
+# !categories/
+# !categories/** 
+# categories/__pycache__
 
 
 
-!manage.py
-!media/
-!media/** 
-!Project Report.pdf
+# !Class_Diagram.mmd
+# !Class_Diagram.png
 
-!global_templates/
-!global_templates/**
+# !db.sqlite3
 
-
-!Readme.md
-!requirements.txt
-
-!reviews/
-!reviews/** 
-reviews/__pycache__
-reviews/migrations
-
-
-!static/
-!static/** 
-!ss/
-!ss/** 
-!transactions/
-!transactions/** 
-transactions/__pycache__
-transactions/migrations
+# !discussions/
+# !discussions/** 
+# discussions/__pycache__
 
 
 
 
-!users/
-!users/**  
-users/templates/login_form.html
-users/templates/update_profile.html
-users/templates/profile.html
-users/templates/signup_form.html
-users/__pycache__
-users/migrations
+# !.env.sample
+
+
+
+# !manage.py
+# !media/
+# !media/** 
+# !Project Report.pdf
+
+# !global_templates/
+# !global_templates/**
+
+
+# !Readme.md
+# !requirements.txt
+
+# !reviews/
+# !reviews/** 
+# reviews/__pycache__
+
+
+# !static/
+# !static/** 
+# !ss/
+# !ss/** 
+# !transactions/
+# !transactions/** 
+# transactions/__pycache__
+
+
+
+
+
+# !users/
+# !users/**  
+# users/templates/login_form.html
+# users/templates/update_profile.html
+# users/templates/profile.html
+# users/templates/signup_form.html
+# users/__pycache__
+# users/migrations/__pycache__
+
+
+.env
+__pycache__
+
+
 
 
 
