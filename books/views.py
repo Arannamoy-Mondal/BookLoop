@@ -23,8 +23,7 @@ def updateBook(r,id):
         book=BookModel.objects.get(pk=id)
         categories=CategoryModel.objects.all()
         print(categories)
-        not_selected_category=set(categories)-set(book.category)
-        not_selected_category=set(categories).union(set(book.category.all()))
+        not_selected_category=set(categories)-set(book.category.all())
         print(not_selected_category)
         
         if r.method=="POST":
