@@ -146,7 +146,7 @@ def updateUserProfile(r):
             userC.save()
             return redirect('update-profile-fun')
        else:
-          return render(r,'update_profile_t.html')
+          return render(r,'update_profile_t.jinja')
     else:
          return redirect('login')
     
