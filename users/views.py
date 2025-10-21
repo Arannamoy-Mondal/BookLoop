@@ -187,8 +187,7 @@ def depositView(request):
                 }
                   sslcz = SSLCOMMERZ({ 'store_id':Store_ID, 'store_pass':Store_Password, 'issandbox': True })
                   response = sslcz.createSession(payload)
-                  # response = requests.post(SSLZ_URL, data=payload)
-                  # data = response.json()
+                  
                   data=response
                   if data.get("status") == "SUCCESS":
                     TransactionModel.objects.create(user=request.user,amount=balance,transaction_type="Credit",payment_status="Pending",reference=payload["tran_id"])
