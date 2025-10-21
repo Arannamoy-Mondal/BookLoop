@@ -8,6 +8,7 @@ import os
 import requests
 from django.contrib.auth import login,logout,authenticate
 from django.contrib import messages
+from sslcommerz_lib import SSLCOMMERZ 
 
 load_dotenv()
 Store_ID=os.getenv('Store_ID')
@@ -184,8 +185,10 @@ def depositView(request):
                     "product_category": "Deposit",
                     "product_profile": "general",
                 }
-                  response = requests.post(SSLZ_URL, data=payload)
-                  data = response.json()
+                  sslcz = SSLCOMMERZ({ 'store_id':Store_ID, 'store_pass':Store_Password, 'issandbox': True })
+                  response = sslcz.createSession(payload)
+                  
+                  data=response
                   if data.get("status") == "SUCCESS":
                     TransactionModel.objects.create(user=request.user,amount=balance,transaction_type="Credit",payment_status="Pending",reference=payload["tran_id"])
                     return redirect(data["GatewayPageURL"])
