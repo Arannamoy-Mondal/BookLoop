@@ -8,7 +8,7 @@ def get_borrow_history(request):
         b =  Borrow_record.objects.filter(user = request.user).order_by('-created_at')
         currently_reading=Borrow_record.objects.filter(user=request.user,return_status="Not").count()
         total_returned=b.count()-currently_reading
-        return render (request,'borrow_record.html',{'b':b,"currently_reading":currently_reading,"total_returned":total_returned})  
+        return render (request,'borrow_record.jinja',{'b':b,"currently_reading":currently_reading,"total_returned":total_returned})  
     else:
         return redirect('home')
     
