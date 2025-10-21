@@ -8,6 +8,7 @@ import os
 import requests
 from django.contrib.auth import login,logout,authenticate
 from django.contrib import messages
+from sslcommerz_lib import SSLCOMMERZ 
 
 load_dotenv()
 Store_ID=os.getenv('Store_ID')
@@ -35,7 +36,7 @@ def signUpUser(r):
 
             if password1!=password2:
                 messages.error(r,"Password does not match")
-                return render(r,'signup.html')
+                return render(r,'signup.jinja')
             elif username and first_name and last_name and email and password1==password2 and dob and contact_no and gender and user_image:
 
                user1=User.objects.create_user(username=username,first_name=first_name,last_name=last_name,email=email,password=password1)
@@ -49,10 +50,10 @@ def signUpUser(r):
 
             return redirect('home')
          else:
-            return render(r,'signup.html')      
+            return render(r,'signup.jinja')      
    except Exception as e:
          messages.error(r,e)
-         return render(r,'signup.html')
+         return render(r,'signup.jinja')
 
 
 def signUpSuperUser(r):
@@ -75,7 +76,7 @@ def signUpSuperUser(r):
 
             if password1!=password2:
                 messages.error(r,"Password does not match")
-                return render(r,'signup.html')
+                return render(r,'signup.jinja')
             elif username and first_name and last_name and email and password1==password2 and dob and contact_no and gender and user_image:
                user1=User.objects.create_superuser(username=username,first_name=first_name,last_name=last_name,email=email,password=password1)
                user1.is_staff=True
@@ -90,10 +91,10 @@ def signUpSuperUser(r):
 
             return redirect('home')
          else:
-            return render(r,'signup.html')      
+            return render(r,'signup.jinja')      
     except Exception as e:
             messages.error(r,e)
-            return render(r,'signup.html')
+            return render(r,'signup.jinja')
     
 def logIn(r):
     if r.user.is_authenticated:
@@ -145,7 +146,7 @@ def updateUserProfile(r):
             userC.save()
             return redirect('update-profile-fun')
        else:
-          return render(r,'update_profile_t.html')
+          return render(r,'update_profile_t.jinja')
     else:
          return redirect('login')
     
@@ -184,8 +185,10 @@ def depositView(request):
                     "product_category": "Deposit",
                     "product_profile": "general",
                 }
-                  response = requests.post(SSLZ_URL, data=payload)
-                  data = response.json()
+                  sslcz = SSLCOMMERZ({ 'store_id':Store_ID, 'store_pass':Store_Password, 'issandbox': True })
+                  response = sslcz.createSession(payload)
+                  data=response
+                  # print(data)
                   if data.get("status") == "SUCCESS":
                     TransactionModel.objects.create(user=request.user,amount=balance,transaction_type="Credit",payment_status="Pending",reference=payload["tran_id"])
                     return redirect(data["GatewayPageURL"])
