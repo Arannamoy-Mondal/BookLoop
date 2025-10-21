@@ -6,6 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 from dotenv import load_dotenv
 import os
 import requests
+from sslcommerz_lib import SSLCOMMERZ 
 from django.contrib.auth import login,logout,authenticate
 from django.contrib import messages
 
@@ -103,7 +104,7 @@ def logIn(r):
              data=r.POST
              username=data['username']
              password=data['password']
-             print(password)
+
              user=authenticate(request=r,username=username,password=password)
              if user is not None:
                 login(request=r,user=user)
@@ -163,7 +164,7 @@ def depositView(request):
                #    user.balance+=balance
                #    user.save()
                #    TransactionModel.objects.create(user=request.user,amount=balance,transaction_type="Credit",payment_status="Pending",reference=f"TXN{request.user.id}{TransactionModel.objects.count()}")
-
+                 
                   payload = {
                     "store_id": Store_ID,
                     "store_passwd": Store_Password,
@@ -184,8 +185,9 @@ def depositView(request):
                     "product_category": "Deposit",
                     "product_profile": "general",
                 }
-                  response = requests.post(SSLZ_URL, data=payload)
-                  data = response.json()
+                  sslcz = SSLCOMMERZ({ 'store_id':Store_ID, 'store_pass':Store_Password, 'issandbox': True })
+                  response = sslcz.createSession(payload)
+                  data=response
                   if data.get("status") == "SUCCESS":
                     TransactionModel.objects.create(user=request.user,amount=balance,transaction_type="Credit",payment_status="Pending",reference=payload["tran_id"])
                     return redirect(data["GatewayPageURL"])
