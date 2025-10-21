@@ -82,5 +82,7 @@ users/__pycache__
 users/migrations
 
 
+db.sqlite3
+
 
 

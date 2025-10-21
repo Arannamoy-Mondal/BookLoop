@@ -151,15 +151,15 @@
                                 {% if book.category %}
                                 
                                 <div class="flex gap-[10px] flex-wrap justify-even items-center">
-                                    <p class="text-black text-[1.2rem] font-bold">Category:</p>                      
-                                    <p class="text-black text-[1.2rem] font-bold">Category:</p>
-                                    <div class="flex">
+                                    <div class="flex items-center">
+                                      <p class="text-black text-[1.2rem] font-bold">Category:</p>
                                       {% for category in book.category.all %}
+
                                     <p class="btn btn-outline m-[5px] font-semibold text-[1.1rem] text-black">
                                         {{ category.title }}</p>
                                     {% endfor %}
                                     </div>
-                                    {% endfor %}
+                                    
                                 </div>
                                 {% endif %}
                             </div>
