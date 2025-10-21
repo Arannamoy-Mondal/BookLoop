@@ -17,10 +17,9 @@ BookLoop | Review
     <div class="border rounded-xl p-4 bg-gray-50 hover:bg-gray-100 transition">
       <div class="flex items-center justify-between mb-2">
         <div class="flex items-center space-x-3">
-          <!-- <img src="{{review.user.user_image.url}}" alt="User" class="w-10 h-10 rounded-full border" /> -->
+          <img src="{{review.user.user_acc.user_image.url}}" alt="User" class="w-10 h-10 rounded-full border" />
           <div>
             <p class="font-semibold text-gray-800">{{review.user.first_name}} {{review.user.last_name}}</p>
-            <p class="text-xs text-gray-500">Yesterday</p>
           </div>
         </div>
         <div class="flex text-yellow-400 text-lg">
@@ -31,7 +30,7 @@ BookLoop | Review
       <div class="bg-white rounded-lg border px-3 py-2 mb-3 flex items-center justify-between">
         <div>
           <a href="{% url 'specific_book' review.book.id %}" class="text-sm font-semibold text-gray-800">Book: <span class="font-normal text-gray-700">{{review.book.title}}</span></a>
-          <p class="text-xs text-gray-500">by {{review.book.author}}</p>
+          <p class="text-xs text-black">by {{review.book.author}}</p>
         </div>
         {% if review.book.book_image %}
         <img src="{{ review.book.book_image.url }}" alt="Book Cover"
@@ -48,12 +47,19 @@ BookLoop | Review
         {% endif %}
       <div class="mt-3 flex items-center justify-between">
         <!-- <button class="btn btn-sm btn-outline btn-primary">Reply</button> -->
-        <p class="text-xs text-gray-500">Reviewed on {{review.created_at}}</p>
+        <p class="text-xs text-black">Reviewed on {{review.created_at}}</p>
       </div>
+
+      {% if review.user == user %}
+      <!-- <a class="btn btn-warning text-black">Edit</a> -->
+      <a href="{% url 'delete-review' review.id %}" class="btn btn-error text-black">Delete</a>
+      {% endif %}
+
     </div>
     {% endfor %}
   </div>
 </div>
+
 
 
 {% endblock %}

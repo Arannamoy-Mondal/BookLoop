@@ -12,7 +12,6 @@ def createReview(r,id):
             borrow_record=Borrow_record.objects.get(pk=id)
             book=borrow_record.book
             rating=data['rating']
-            print(rating)
             if int(rating)==5:
                 rating="⭐⭐⭐⭐⭐"
             elif int(rating)==4:
@@ -52,3 +51,12 @@ def allReviewHistory(r):
        return render(r,"review_history.html",{"reviews":reviews})
     else:
         return redirect("login")
+
+def deleteReview(r,id):
+    if r.user.is_authenticated:
+        review=Review.objects.get(pk=id)
+        if review.user==r.user:
+            review.delete()
+            redirect("all_review_history")
+        redirect("all_review_history")
+    return redirect("home")
