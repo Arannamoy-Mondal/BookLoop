@@ -12,7 +12,7 @@ def createDiscussion(r,id):
             comment=data["comment"]
             book=BookModel.objects.get(pk=id)
             if comment or discussion_image:
-               print(comment)
+            #    print(comment)
                DiscussionModel.objects.create(user=r.user,comment=comment,discussion_image=discussion_image,book=book)
             return redirect("specific_book",id=id)
         else:
