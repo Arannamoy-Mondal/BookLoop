@@ -81,10 +81,3 @@ users/templates/signup_form.html
 users/__pycache__
 users/migrations
 
-
-
-
-
-
-
-db.sqlite3
